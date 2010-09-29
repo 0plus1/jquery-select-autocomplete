@@ -20,6 +20,7 @@
 			, formatResult: function(row) {
 				return row.name;
 			}
+			, callback: false
 		};
 		
 		options = $.extend(defaults, options);
@@ -59,6 +60,10 @@
 			//make the result handler set the selected item in the select list
 			$input.result(function(event, selected_item, formatted) { 
 				$($this.find('option[value=' + selected_item.value + ']')[0]).attr('selected', true);
+				//Callback function
+				if (options.callback===true) {
+					autocompleteselectCallback($($this.find('option[value=' + selected_item.value + ']')[0]).val());
+				}
 			});
 
       $input.blur(function(){
@@ -74,7 +79,7 @@
            */
           if(this.value != $this[0].options[$this[0].selectedIndex].text){
             $input.val($this[0].options[$this[0].selectedIndex].text);
-          }  
+          }
       });
 		
 			//set the initial text value of the autocomplete input box to the text node of the selected item in the select control
